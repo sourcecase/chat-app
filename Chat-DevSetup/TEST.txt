@@ -1,0 +1,10 @@
+WebSocket Test
+	Chrome Simple Web Socket Client Plugin
+		ws://localhost:8080/RockChat-Backend-1.0/ChatWebSocket
+		ws://localhost:8080/RockChat-Backend-1.0/rockchat/ChatWebSocket
+		{"action":"chatMessage", "text":"hello world"}
+
+HTTP Test
+	curl http://localhost:8080/RockChat-Backend-1.0/rockchat/RestChatRooms --verbose
+	curl --data "{'username': username, 'password': password}" http://localhost:8080/chat/login/validate --verbose
+	curl --data "" "http://localhost:8080/chat/login/validate?username=Chris&password=test" --verbose
