@@ -1,2 +1,2 @@
-cd D:\Development\RockChat\projects
+cd D:\Development\chat-app\
 START cmd.exe

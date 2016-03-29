@@ -4,7 +4,7 @@
 	
 	<parent>
 		<groupId>com.github.sourcecase.chat</groupId>
-		<artifactId>chat-root</artifactId>
+		<artifactId>Chat-Root</artifactId>
 		<version>0.3.0-SNAPSHOT</version>
 	</parent>
 	

@@ -38,7 +38,7 @@ public class ChatWebAppConfiguration extends WebMvcConfigurerAdapter implements 
 	private static final Logger logger = Logger.getLogger(ChatWebAppConfiguration.class.getName());
 
 	public ChatWebAppConfiguration() {
-		logger.log(Level.SEVERE, "init constructor");
+		logger.log(Level.SEVERE, "init constructor.");
 	}
 
 	@Autowired
