@@ -1,11 +1,16 @@
 package com.github.sourcecase.chat.service.impl.groups;
 
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
+import com.github.sourcecase.chat.service.impl.AbstractChatDTO;
 
-public class ChatGroupDTOImpl implements ChatGroupDTO {
+public class ChatGroupDTOImpl extends AbstractChatDTO implements ChatGroupDTO {
 
 	private long id;
 	private String name;
+
+	public ChatGroupDTOImpl() {
+
+	}
 
 	public ChatGroupDTOImpl(long id, String name) {
 		this.id = id;

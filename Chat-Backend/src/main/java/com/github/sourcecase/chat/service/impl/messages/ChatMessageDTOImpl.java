@@ -4,13 +4,18 @@ import java.sql.Time;
 
 import com.github.sourcecase.chat.service.api.messages.ChatMessageDTO;
 import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
+import com.github.sourcecase.chat.service.impl.AbstractChatDTO;
 
-public class ChatMessageDTOImpl implements ChatMessageDTO {
+public class ChatMessageDTOImpl extends AbstractChatDTO implements ChatMessageDTO {
 
 	private long id;
 	private String text;
 	private Time time;
 	private ChatParticipantDTO sender;
+
+	public ChatMessageDTOImpl() {
+
+	}
 
 	public ChatMessageDTOImpl(long id, String text, Time time, ChatParticipantDTO sender) {
 		this.id = id;

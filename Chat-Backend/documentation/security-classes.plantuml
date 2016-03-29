@@ -1,0 +1,9 @@
+@startuml
+WebSecurity --> HttpSecurity
+HttpSecurity <-- WebSecurityConfigurationAdapter
+AuthenticationManagerBuilder <-- WebSecurityConfigurationAdapter
+AuthenticationManager <-- WebSecurityConfigurationAdapter
+AuthenticationManager <-- AuthenticationManagerBuilder
+AuthenticationProvider <-- AuthenticationManager
+AuthenticationManager <-- AuthentificationProcessingFilter
+@enduml

@@ -65,6 +65,7 @@ public class PersistenceTestData {
 			Logger.getLogger(ChatParticipantDTOImpl.class.getName()).log(Level.SEVERE,
 					chatMessage.getSender().getName() + ": " + chatMessage.getText());
 		}
+		
 	}
 
 }
