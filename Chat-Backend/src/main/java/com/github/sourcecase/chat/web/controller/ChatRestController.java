@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
+import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionService;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupService;
-import com.github.sourcecase.chat.service.api.messages.ChatMessageDTO;
-import com.github.sourcecase.chat.service.api.messages.ChatMessageService;
 
 @RestController
 public class ChatRestController {
 
 	private ChatGroupService chatGroupService;
-	private ChatMessageService chatMessageService;
+	private ChatDiscussionService chatMessageService;
 
 	@Autowired
-	public ChatRestController(ChatGroupService chatGroupService, ChatMessageService chatMessageService) {
+	public ChatRestController(ChatGroupService chatGroupService, ChatDiscussionService chatMessageService) {
 		this.chatGroupService = chatGroupService;
 		this.chatMessageService = chatMessageService;
 	}

@@ -9,6 +9,7 @@ public class ChatParticipantDTOImpl extends AbstractChatDTO implements ChatParti
 	private String name;
 
 	public ChatParticipantDTOImpl() {
+
 	}
 
 	public ChatParticipantDTOImpl(long id, String name) {

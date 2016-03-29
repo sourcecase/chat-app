@@ -1,10 +1,10 @@
-package com.github.sourcecase.chat.service.api.messages;
+package com.github.sourcecase.chat.service.api.discussion;
 
 import java.util.List;
 
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 
-public interface ChatMessageService {
+public interface ChatDiscussionService {
 
 	void addMessage(String text, String group, String senderName);
 

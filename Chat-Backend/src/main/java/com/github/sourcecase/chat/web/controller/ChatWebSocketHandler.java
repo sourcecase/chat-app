@@ -19,16 +19,16 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.github.sourcecase.chat.service.api.messages.ChatMessageService;
+import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionService;
 
 @Component
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
 	private List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
-	private ChatMessageService chatMessageService;
+	private ChatDiscussionService chatMessageService;
 
 	@Autowired
-	public ChatWebSocketHandler(ChatMessageService chatMessageService) {
+	public ChatWebSocketHandler(ChatDiscussionService chatMessageService) {
 		this.chatMessageService = chatMessageService;
 	}
 
