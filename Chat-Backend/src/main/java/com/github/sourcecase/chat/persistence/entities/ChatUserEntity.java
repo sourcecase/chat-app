@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ChatParticipantEntity {
+public class ChatUserEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,11 +14,14 @@ public class ChatParticipantEntity {
 
 	private String name;
 
-	protected ChatParticipantEntity() {
+	private String password;
+
+	protected ChatUserEntity() {
 	}
 
-	public ChatParticipantEntity(String name) {
+	public ChatUserEntity(String name, String password) {
 		this.name = name;
+		this.password = password;
 	}
 
 	public long getId() {
@@ -29,9 +32,13 @@ public class ChatParticipantEntity {
 		return name;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("ChatParticipantEntity[id=%d, name='%s']", id, name);
+		return String.format("ChatParticipantEntity[id=%d, name='%s', password='%s']", id, name, password);
 	}
 
 }

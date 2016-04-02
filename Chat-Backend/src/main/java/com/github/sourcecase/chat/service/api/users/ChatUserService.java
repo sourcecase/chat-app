@@ -4,4 +4,6 @@ public interface ChatUserService {
 
 	void performRegistration(ChatUserLoginDTO userLoginDTO);
 
+	ChatParticipantDTO validateLogin(ChatUserLoginDTO userLoginDTO);
+
 }

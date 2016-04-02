@@ -26,6 +26,7 @@ import com.github.sourcecase.chat.service.impl.discussion.ChatMessageDTOImpl;
 import com.github.sourcecase.chat.service.impl.groups.ChatGroupDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
+import com.github.sourcecase.chat.web.ChatPathConfiguration;
 
 @Controller
 public class ChatWebAppController {
@@ -35,13 +36,13 @@ public class ChatWebAppController {
 	@Autowired
 	private ChatDTOFactory chatDTOFactory;
 
-	@RequestMapping(path = "/", method = RequestMethod.GET)
+	@RequestMapping(path = ChatPathConfiguration.CHAT_ROOT_URL_PATH, method = RequestMethod.GET)
 	public String index(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
 		logger.log(Level.SEVERE, "index");
 		return "index";
 	}
 
-	@RequestMapping(path = "/test", method = RequestMethod.GET)
+	@RequestMapping(path = ChatPathConfiguration.CHAT_TEST, method = RequestMethod.GET)
 	public String test(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
 		logger.log(Level.SEVERE, "index");
 		String chatGroupDTOJson = new ChatGroupDTOImpl(2, "aa").serializeToJson();

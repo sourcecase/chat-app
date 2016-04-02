@@ -31,6 +31,7 @@ import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupListDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupService;
 import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
+import com.github.sourcecase.chat.service.api.users.ChatUserService;
 import com.github.sourcecase.chat.web.ChatPathConfiguration;
 
 @RestController
@@ -41,13 +42,15 @@ public class ChatRestController {
 	private final ChatGroupService chatGroupService;
 	private final ChatDiscussionService chatMessageService;
 	private final ChatDTOFactory chatDTOFactory;
+	private final ChatUserService chatUserService;
 
 	@Autowired
 	public ChatRestController(ChatGroupService chatGroupService, ChatDiscussionService chatMessageService,
-			ChatDTOFactory chatDTOFactory) {
+			ChatDTOFactory chatDTOFactory, ChatUserService chatUserService) {
 		this.chatGroupService = chatGroupService;
 		this.chatMessageService = chatMessageService;
 		this.chatDTOFactory = chatDTOFactory;
+		this.chatUserService = chatUserService;
 	}
 
 	@RequestMapping(path = ChatPathConfiguration.REST_CHAT_GROUPS, method = RequestMethod.GET)
@@ -72,6 +75,8 @@ public class ChatRestController {
 			ChatUserLoginDTO userLoginDto = chatDTOFactory.createFromJson(ChatUserLoginDTO.class, body);
 			logger.info("registering retrieved username:" + userLoginDto.getName() + " password:"
 					+ userLoginDto.getPassword());
+			chatUserService.performRegistration(userLoginDto);
+
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "", e.getCause());
 		}

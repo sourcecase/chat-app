@@ -1,3 +1,4 @@
+var WEB_SOCKET_URL = "ws://localhost:8080/chat/chatWebSocket";
 var socket = null;
 var receivedMessages = [];
 
@@ -54,18 +55,23 @@ function formSubmit() {
 var req;
 
 function chatGroupsCallback() {
+	//Example
+	//{"type":"ChatGroupListDTOImpl","chatGroups":[{"type":"group","id":3,"name":"J2EE"},
+	//{"type":"group","id":4,"name":"Hibernate"},{"type":"group","id":5,"name":"Ultimate Frisbee"},{"type":"group","id":6,"name":"Klettersteigen"}]}
 	if (req.readyState == 4) {
         if (req.status == 200) {
         	console.log("hello chatRoomsCallback");
         	console.log(req.responseText);
         	console.log(req);
         	
-        	var chatRooms = JSON.parse(req.responseText);
+        	var chatGroupListDTO = JSON.parse(req.responseText);
+        	var chatGroupArray = chatGroupListDTO.chatGroups;
         	
         	var htmlChatRooms = "";
         	var i = 0;
-        	for (i = 0; i < chatRooms.length; i++) {
-        		htmlChatRooms = htmlChatRooms + "<option name='type' value='" + chatRooms[i] + "'>" + chatRooms[i] + "</option>";
+        	for (i = 0; i < chatGroupArray.length; i++) {
+        		var chatGroupName = chatGroupArray[i].name;
+        		htmlChatRooms = htmlChatRooms + "<option name='type' value='" + chatGroupName + "'>" + chatGroupName + "</option>";
         	}
         	
         	var form = document.getElementById("chat_room");
@@ -76,7 +82,7 @@ function chatGroupsCallback() {
 
 function initWebSocket() {
 	console.log("initWebSocket");
-	socket = new WebSocket("ws://localhost:8080/chat/ChatWebSocketNeu")
+	socket = new WebSocket(WEB_SOCKET_URL);
 	socket.onmessage = onMessage;
 }
 
@@ -98,7 +104,7 @@ function startChatting() {
 	if(socket == null) {
 		console.log("startChatting init");
 		var form = document.getElementById("newMessageForm");
-	    form.elements["nick_name"].value = chatParticipantAuthenticated.username;
+	    form.elements["nick_name"].value = chatParticipantAuthenticated.name;
 		retrievChatGroups();
 		initWebSocket();
 	} else {

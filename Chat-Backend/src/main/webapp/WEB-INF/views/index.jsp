@@ -2,17 +2,17 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-<head>
+	<head>
 		<meta name="_csrf" content="${_csrf.token}"/>
 		<meta name="_csrf_header" content="${_csrf.headerName}"/>
 		<title>Simple Chat System</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="//code.jquery.com/jquery-1.12.2.min.js"></script>
-        <script src="/chat/javascript/chatAuthentication.js"></script>
-        <script src="/chat/javascript/chatWebsocket.js"></script>
-        <script src="/chat/javascript/chatViewHandler.js"></script>
-        <script src="/chat/javascript/chatDtoFactory.js"></script>
-</head>
+        <script src="/data/javascript/chatAuthentication.js"></script>
+        <script src="/data/javascript/chatWebsocket.js"></script>
+        <script src="/data/javascript/chatViewHandler.js"></script>
+        <script src="/data/javascript/chatDtoFactory.js"></script>
+	</head>
     <body>
     	<h2>Welcome to the Chat</h2>
     	<div id="chatMenu">

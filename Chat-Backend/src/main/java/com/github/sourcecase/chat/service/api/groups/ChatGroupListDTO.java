@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.sourcecase.chat.service.api.ChatDTO;
-import com.github.sourcecase.chat.service.impl.groups.ChatGroupDTOImpl;
+import com.github.sourcecase.chat.service.impl.groups.ChatGroupListDTOImpl;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({ @Type(value = ChatGroupDTOImpl.class, name = "groupList") })
+@JsonSubTypes({ @Type(value = ChatGroupListDTOImpl.class, name = "groupList") })
 public interface ChatGroupListDTO extends ChatDTO {
 
 	List<ChatGroupDTO> getChatGroups();

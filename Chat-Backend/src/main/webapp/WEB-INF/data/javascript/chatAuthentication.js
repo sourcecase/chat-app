@@ -29,9 +29,9 @@ function validateLogin() {
 	
     // Body
 	var form = document.getElementById("loginForm");
-    var username = form.elements["username"].value;
+    var name = form.elements["username"].value;
     var password = form.elements["password"].value;
-    var userLoginDtoJson = createUserLoginDtoJson(username, password);
+    var userLoginDtoJson = createChatUserLoginDtoJson(name, password);
     console.log(userLoginDtoJson);
     
     http.setRequestHeader("Content-length", userLoginDtoJson.length);
@@ -39,7 +39,7 @@ function validateLogin() {
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
         	console.log("Login response came logged in now.");
-        	chatParticipantAuthenticated = createUserLoginDto(username, password);
+        	chatParticipantAuthenticated = createChatUserLoginDto(name, password);
         	showChatMain();
         } else {
         	if(http.status != 200) {
@@ -65,10 +65,10 @@ function performRegistration() {
 	
     // Body
 	var form = document.getElementById("registerForm");
-    var username = form.elements["username"].value;
+    var name = form.elements["username"].value;
     var password = form.elements["password"].value;
     var passwordAgain = form.elements["passwordAgain"].value;
-    var userLoginDtoJson = createUserLoginDto(username, password);
+    var userLoginDtoJson = createChatUserLoginDtoJson(name, password);
     console.log(userLoginDtoJson);
     
     http.setRequestHeader("Content-length", userLoginDtoJson.length);

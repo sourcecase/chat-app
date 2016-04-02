@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.github.sourcecase.chat.persistence.entities.ChatGroupEntity;
 import com.github.sourcecase.chat.persistence.entities.ChatMessageEntity;
-import com.github.sourcecase.chat.persistence.entities.ChatParticipantEntity;
+import com.github.sourcecase.chat.persistence.entities.ChatUserEntity;
 import com.github.sourcecase.chat.persistence.repositories.ChatGroupRepository;
 import com.github.sourcecase.chat.persistence.repositories.ChatMessageRepository;
-import com.github.sourcecase.chat.persistence.repositories.ChatParticipantRepository;
+import com.github.sourcecase.chat.persistence.repositories.ChatUserRepository;
 import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionService;
 import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
@@ -32,18 +32,18 @@ public class ChatDiscussionServiceImpl implements ChatDiscussionService {
 	private ChatGroupRepository chatGroupRepository;
 
 	@Autowired
-	private ChatParticipantRepository chatParticipantRepository;
+	private ChatUserRepository chatParticipantRepository;
 
 	@Override
 	public void addMessage(String text, String group, String senderName) {
 		ChatGroupEntity chatGroupEntity = chatGroupRepository.findByName(group).get(0);
 
-		List<ChatParticipantEntity> chatParticipantEntityQuery = chatParticipantRepository.findByName(senderName);
+		List<ChatUserEntity> chatParticipantEntityQuery = chatParticipantRepository.findByName(senderName);
 
 		if (chatParticipantEntityQuery.size() != 1) {
 			logger.log(Level.SEVERE, "non single user");
 		} else {
-			ChatParticipantEntity chatParticipantEntity = chatParticipantEntityQuery.get(0);
+			ChatUserEntity chatParticipantEntity = chatParticipantEntityQuery.get(0);
 			chatMessageRepository.saveAndFlush(new ChatMessageEntity(text, chatParticipantEntity, chatGroupEntity));
 		}
 

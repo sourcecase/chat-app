@@ -25,6 +25,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.server.jetty.JettyRequestUpgradeStrategy;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
+import com.github.sourcecase.chat.web.ChatPathConfiguration;
 import com.github.sourcecase.chat.web.controller.ChatWebSocketHandler;
 
 @Configuration
@@ -56,7 +57,8 @@ public class ChatWebAppConfiguration extends WebMvcConfigurerAdapter implements 
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/javascript/**").addResourceLocations("/WEB-INF/javascript/")
+		registry.addResourceHandler(ChatPathConfiguration.CHAT_ROOT_DATA_PATH + "/javascript/**")
+				.addResourceLocations("/WEB-INF" + ChatPathConfiguration.CHAT_ROOT_DATA_PATH + "/javascript/")
 				.setCachePeriod(31556926);
 	}
 
@@ -67,8 +69,8 @@ public class ChatWebAppConfiguration extends WebMvcConfigurerAdapter implements 
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(chatWebSocketHandler, "/ChatWebSocketNeu").setHandshakeHandler(handshakeHandler())
-				.setAllowedOrigins("*");
+		registry.addHandler(chatWebSocketHandler, ChatPathConfiguration.CHAT_WEB_SOCKET)
+				.setHandshakeHandler(handshakeHandler()).setAllowedOrigins("*");
 	}
 
 	@Bean

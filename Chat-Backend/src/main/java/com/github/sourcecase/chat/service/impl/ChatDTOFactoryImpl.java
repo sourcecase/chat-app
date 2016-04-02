@@ -14,10 +14,12 @@ import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionDTO;
 import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
+import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
 import com.github.sourcecase.chat.service.impl.discussion.ChatDiscussionDTOImpl;
 import com.github.sourcecase.chat.service.impl.discussion.ChatMessageDTOImpl;
 import com.github.sourcecase.chat.service.impl.groups.ChatGroupDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
+import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
 
 @Service
 public class ChatDTOFactoryImpl implements ChatDTOFactory {
@@ -58,6 +60,11 @@ public class ChatDTOFactoryImpl implements ChatDTOFactory {
 	@Override
 	public ChatDiscussionDTO createChatDiscussionDTO(ChatGroupDTO chatGroupDTO, List<ChatMessageDTO> chatMessageDTOs) {
 		return new ChatDiscussionDTOImpl(chatGroupDTO, chatMessageDTOs);
+	}
+
+	@Override
+	public ChatUserLoginDTO createChatUserLoginDTO(String name, String password) {
+		return new ChatUserLoginDTOImpl(name, password);
 	}
 
 }

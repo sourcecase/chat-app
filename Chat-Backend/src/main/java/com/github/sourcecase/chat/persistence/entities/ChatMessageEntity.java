@@ -33,7 +33,7 @@ public class ChatMessageEntity {
 		return time;
 	}
 
-	public ChatParticipantEntity getSender() {
+	public ChatUserEntity getSender() {
 		return sender;
 	}
 
@@ -43,8 +43,8 @@ public class ChatMessageEntity {
 
 	private Time time;
 
-	@ManyToOne(optional = false, targetEntity = ChatParticipantEntity.class)
-	private ChatParticipantEntity sender;
+	@ManyToOne(optional = false, targetEntity = ChatUserEntity.class)
+	private ChatUserEntity sender;
 
 	@ManyToOne(optional = false, targetEntity = ChatGroupEntity.class)
 	private ChatGroupEntity group;
@@ -52,7 +52,7 @@ public class ChatMessageEntity {
 	protected ChatMessageEntity() {
 	}
 
-	public ChatMessageEntity(String text, ChatParticipantEntity sender, ChatGroupEntity group) {
+	public ChatMessageEntity(String text, ChatUserEntity sender, ChatGroupEntity group) {
 		this.text = text;
 		this.time = new Time(System.currentTimeMillis());
 		this.sender = sender;

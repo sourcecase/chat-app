@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,10 +16,25 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.github.sourcecase.chat.service.api.ChatDTOFactory;
+import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
+import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
+import com.github.sourcecase.chat.service.api.users.ChatUserService;
+
 @Component
 public class ChatWebAppAuthenticationProvider implements AuthenticationProvider {
 
 	private static final Logger logger = Logger.getLogger(ChatWebAppAuthenticationProvider.class.getName());
+
+	public ChatWebAppAuthenticationProvider() {
+		logger.log(Level.INFO, "ChatWebAppAuthenticationProvider constructor called.");
+	}
+
+	@Autowired
+	private ChatUserService chatUserService;
+
+	@Autowired
+	private ChatDTOFactory chatDTOFactory;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -31,32 +47,19 @@ public class ChatWebAppAuthenticationProvider implements AuthenticationProvider 
 		}
 
 		String authority = "USER";
-		if (userName.equals("Chris")) {
-			logger.info("Chris is welcome.");
-		} else if (userName.equals("admin")) {
-			logger.info("admin is welcome.");
-			authority = "ADMIN";
+		String password = (String) authentication.getCredentials();
+
+		ChatUserLoginDTO createChatUserLoginDTO = chatDTOFactory.createChatUserLoginDTO(userName, password);
+		ChatParticipantDTO validateLogin = chatUserService.validateLogin(createChatUserLoginDTO);
+
+		if (validateLogin != null) {
+			logger.log(Level.SEVERE, "authentication granted");
+			UsernamePasswordAuthenticationToken result = createToken(authentication, authority);
+			return result;
 		} else {
-			logger.info("not allowed so far");
+			logger.log(Level.SEVERE, "authentication not granted");
 			return null;
 		}
-
-		// final ChatParticipantDTO chatParticipantDTO =
-		// userService.findByUserName(userName);
-		// if (userDetailsDTO == null) {
-		// logger.log(Level.SEVERE, "username '{}' not found", userName);
-		// return null;
-		// }
-		//
-		// final String crendentials =
-		// authentication.getCredentials().toString();
-		// if (crendentials.equals(chatParticipantDTO.getPassword()) == false) {
-		// logger.log(Level.SEVERE, "password mismatch");
-		// return null;
-		// }
-
-		UsernamePasswordAuthenticationToken result = createToken(authentication, authority);
-		return result;
 
 	}
 

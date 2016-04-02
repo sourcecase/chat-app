@@ -4,6 +4,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,12 +31,14 @@ public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 	private HttpSecurity http = null;
 	private ChatAuthenticationProcessingFilter chatAuthenticationProcessingFilter = null;
 
-	@Autowired
+	private @Autowired AutowireCapableBeanFactory beanFactory;
+
 	public ChatWebAppSecurityConfigurerAdapter() {
 		logger.log(Level.SEVERE, "init constructor");
 	}
 
 	@Autowired
+	@Required
 	public void setChatDTOFactory(ChatDTOFactory chatDTOFactory) {
 		this.chatDTOFactory = chatDTOFactory;
 		try {
@@ -54,7 +58,8 @@ public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 		http.authorizeRequests()
 				.antMatchers(ChatPathConfiguration.CHAT_INDEX, ChatPathConfiguration.CHAT_TEST,
 						ChatPathConfiguration.REST_REGISTER_PERFORM_URL, ChatPathConfiguration.LOGIN_VALIDATE_URL,
-						ChatPathConfiguration.LOGIN_URL, "/chat/error", ChatPathConfiguration.LOGIN_URL + "/*")
+						ChatPathConfiguration.LOGIN_URL, "/chat/error", ChatPathConfiguration.LOGIN_URL + "/*",
+						ChatPathConfiguration.CHAT_ROOT_DATA_PATH + "/**")
 				.permitAll().anyRequest().authenticated();
 
 		http.logout().permitAll();
@@ -85,7 +90,9 @@ public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		logger.info("authenticationManagerBuilder injected");
-		authenticationManagerBuilder.authenticationProvider(new ChatWebAppAuthenticationProvider());
+		final ChatWebAppAuthenticationProvider chatWebAppAuthenticationProvider = new ChatWebAppAuthenticationProvider();
+		beanFactory.autowireBean(chatWebAppAuthenticationProvider);
+		authenticationManagerBuilder.authenticationProvider(chatWebAppAuthenticationProvider);
 	}
 
 }
