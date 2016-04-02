@@ -8,7 +8,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.github.sourcecase.chat.web.config.ChatPathConfiguration;
+import com.github.sourcecase.chat.web.ChatPathConfiguration;
 
 public class ChatLogoutFilter extends LogoutFilter {
 

@@ -8,7 +8,7 @@ import com.github.sourcecase.chat.web.security.config.ChatWebAppSecurityConfigur
 
 public class ChatWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-	public static String CHAT_ROOT_URL_PATH = "/chat";
+	public static final String CHAT_ROOT_URL_PATH = "/chat";
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {

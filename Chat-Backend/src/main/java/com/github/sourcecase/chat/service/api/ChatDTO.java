@@ -1,7 +1,7 @@
 package com.github.sourcecase.chat.service.api;
 
 /**
- * A chat service layer super type.
+ * The chat service layer super type..
  * 
  */
 public interface ChatDTO {

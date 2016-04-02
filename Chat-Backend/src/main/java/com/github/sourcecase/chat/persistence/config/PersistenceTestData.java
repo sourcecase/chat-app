@@ -3,8 +3,6 @@ package com.github.sourcecase.chat.persistence.config;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,22 +22,15 @@ public class PersistenceTestData {
 	private ChatMessageRepository chatMessageRepository;
 
 	@Autowired
-	public void setChatParticipantRepository(ChatParticipantRepository chatParticipantRepository) {
+	public PersistenceTestData(ChatParticipantRepository chatParticipantRepository,
+			ChatGroupRepository chatGroupRepository, ChatMessageRepository chatMessageRepository) {
 		this.chatParticipantRepository = chatParticipantRepository;
-	}
-
-	@Autowired
-	public void setChatGroupRepository(ChatGroupRepository chatGroupRepository) {
 		this.chatGroupRepository = chatGroupRepository;
-	}
-
-	@Autowired
-	public void setChatMessageRepository(ChatMessageRepository chatMessageRepository) {
 		this.chatMessageRepository = chatMessageRepository;
+		this.addTestData();
 	}
 
-	@PostConstruct
-	public void startTest() {
+	public void addTestData() {
 		Logger.getLogger(ChatParticipantDTOImpl.class.getName()).log(Level.SEVERE, "Starting JPA test");
 		this.chatParticipantRepository.save(new ChatParticipantEntity("Chris"));
 		this.chatParticipantRepository.save(new ChatParticipantEntity("Alice"));
@@ -65,7 +56,7 @@ public class PersistenceTestData {
 			Logger.getLogger(ChatParticipantDTOImpl.class.getName()).log(Level.SEVERE,
 					chatMessage.getSender().getName() + ": " + chatMessage.getText());
 		}
-		
+
 	}
 
 }

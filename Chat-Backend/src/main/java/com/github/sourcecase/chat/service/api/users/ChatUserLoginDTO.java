@@ -14,35 +14,19 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with blog. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.sourcecase.chat.service.impl.users;
+package com.github.sourcecase.chat.service.api.users;
 
-import com.github.sourcecase.chat.service.api.users.UserLoginDTO;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
 
-/**
- * The Class UserLoginDTOImpl.
- */
-public class UserLoginDTOImpl implements UserLoginDTO {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({ @Type(value = ChatUserLoginDTOImpl.class, name = "userLogin") })
+public interface ChatUserLoginDTO {
 
-	private String name;
+	public String getName();
 
-	private String password;
-
-	@Override
-	public String getName() {
-		return this.name;
-	}
-
-	@Override
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setName(final String userName) {
-		this.name = userName;
-	}
-
-	public void setPassword(final String password) {
-		this.password = password;
-	}
+	public String getPassword();
 
 }

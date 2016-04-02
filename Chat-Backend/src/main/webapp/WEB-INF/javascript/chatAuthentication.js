@@ -1,4 +1,5 @@
 var CHAT_LOGIN_VALIDATE_URL = "/chat/login/validate";
+var CHAT_REGISTRATION_URL = "/chat/register/perform";
 var CHAT_LOGOUT_URL = "/chat/logout/perform";
 
 var chatParticipantAuthenticated = null;
@@ -13,12 +14,6 @@ function addCSRFHeader(http) {
     
     http.setRequestHeader(_csrf_header, _csrf);
     
-}
-
-function showErrorToUser(error) {
-	$( "#showLoginError" ).html("Error " + error);
-	$( "#showLoginError" ).hide();
-	$( "#showLoginError" ).show();
 }
 
 function validateLogin() {
@@ -36,24 +31,61 @@ function validateLogin() {
 	var form = document.getElementById("loginForm");
     var username = form.elements["username"].value;
     var password = form.elements["password"].value;
-    var userDetails = {"username": username, "password": password};
-    var paramsJson = JSON.stringify(userDetails);
-    console.log(paramsJson);
+    var userLoginDtoJson = createUserLoginDtoJson(username, password);
+    console.log(userLoginDtoJson);
     
-    http.setRequestHeader("Content-length", paramsJson.length);
+    http.setRequestHeader("Content-length", userLoginDtoJson.length);
     
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
         	console.log("Login response came logged in now.");
-        	chatParticipantAuthenticated = userDetails;
+        	chatParticipantAuthenticated = createUserLoginDto(username, password);
+        	showChatMain();
         } else {
         	if(http.status != 200) {
         		console.log("Login response came error: " + http.status);
-        		showErrorToUser(http.status);
+        		showLoginError(http.status);
         	}
         }
     }
-    http.send(paramsJson);
+    http.send(userLoginDtoJson);
+    
+}
+
+function performRegistration() {
+	
+	console.log("performRegistration");
+	
+	var http = new XMLHttpRequest();
+	http.open("POST", CHAT_REGISTRATION_URL, true);
+	
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.setRequestHeader("Connection", "close");
+    addCSRFHeader(http);
+	
+    // Body
+	var form = document.getElementById("registerForm");
+    var username = form.elements["username"].value;
+    var password = form.elements["password"].value;
+    var passwordAgain = form.elements["passwordAgain"].value;
+    var userLoginDtoJson = createUserLoginDto(username, password);
+    console.log(userLoginDtoJson);
+    
+    http.setRequestHeader("Content-length", userLoginDtoJson.length);
+    
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+        	console.log("Register response came.");
+        	showLogin();
+        	showLoginError("You are registered now.");
+        } else {
+        	if(http.status != 200) {
+        		console.log("Register response came error: " + http.status);
+        		showLoginError(http.status);
+        	}
+        }
+    }
+    http.send(userLoginDtoJson);
     
 }
 

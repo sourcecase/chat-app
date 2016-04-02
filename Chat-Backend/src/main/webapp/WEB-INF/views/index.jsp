@@ -11,11 +11,13 @@
         <script src="/chat/javascript/chatAuthentication.js"></script>
         <script src="/chat/javascript/chatWebsocket.js"></script>
         <script src="/chat/javascript/chatViewHandler.js"></script>
+        <script src="/chat/javascript/chatDtoFactory.js"></script>
 </head>
     <body>
     	<h2>Welcome to the Chat</h2>
     	<div id="chatMenu">
     		<a onclick="showLogin()" href="#">Login</a>
+    		<a onclick="showRegister()" href="#">Register</a>
     		<a onclick="showLogout()" href="#">Logout</a>
     		<a onclick="showChatMain()" href="#">Chat</a>
     	</div>
@@ -34,9 +36,25 @@
 					<button type="button" value="Login" onclick=validateLogin()>login</button>
 				</div>
 			</form>
-			<div id="showLoginError" style="color: red;">
-				Not logged in.
-			</div>
+		</div>
+		<div id="showRegister">
+			<form id="registerForm">
+				<div>
+					<label>username</label>
+					<input id="username" type="text" name="name">
+				</div>
+				<div>
+					<label>password</label>
+					<input id="password" type="password" name="password">		
+				</div>
+				<div>
+					<label>password again</label>
+					<input id="passwordAgain" type="password" name="passwordAgain">		
+				</div>
+				<div>
+					<button type="button" value="Register" onclick=performRegistration()>register</button>
+				</div>
+			</form>
 		</div>
 		<div id="showChatMain">
 			<div id="wrapper">
@@ -59,6 +77,9 @@
 	        
 	        <div id="newChatMessage">
 	        </div>
+		</div>
+		<div id="showLoginError" style="color: red;">
+				Not logged in.
 		</div>
     </body>
 </html>

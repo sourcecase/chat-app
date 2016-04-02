@@ -31,8 +31,8 @@ import com.github.sourcecase.chat.web.controller.ChatWebSocketHandler;
 @EnableWebMvc
 @EnableWebSocket
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = "com.github.sourcecase.chat")
 @Order(-1)
+@ComponentScan(basePackages = "com.github.sourcecase.chat")
 public class ChatWebAppConfiguration extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
 
 	private static final Logger logger = Logger.getLogger(ChatWebAppConfiguration.class.getName());

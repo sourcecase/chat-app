@@ -82,7 +82,7 @@ function initWebSocket() {
 
 function retrievChatGroups() {
 	console.log("retrievChatGroups");
-	var url = "RestChatRooms";
+	var url = "chatGroups";
 	if (typeof XMLHttpRequest != "undefined") {
 		req = new XMLHttpRequest();
 	} else if (window.ActiveXObject) {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.github.sourcecase.chat.persistence.entities.ChatGroupEntity;
 import com.github.sourcecase.chat.persistence.repositories.ChatGroupRepository;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
+import com.github.sourcecase.chat.service.api.groups.ChatGroupListDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupService;
 
 @Service
@@ -18,15 +19,17 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 	private ChatGroupRepository chatGroupRepository;
 
 	@Override
-	public List<ChatGroupDTO> getAllChatGroups() {
+	public ChatGroupListDTO getAllChatGroups() {
 
 		List<ChatGroupEntity> allGroups = chatGroupRepository.findAll();
 
-		List<ChatGroupDTO> result = new ArrayList<>();
+		List<ChatGroupDTO> listOfChatGroups = new ArrayList<>();
 
 		for (ChatGroupEntity groupEntity : allGroups) {
-			result.add(new ChatGroupDTOImpl(groupEntity.getId(), groupEntity.getName()));
+			listOfChatGroups.add(new ChatGroupDTOImpl(groupEntity.getId(), groupEntity.getName()));
 		}
+
+		ChatGroupListDTO result = new ChatGroupListDTOImpl(listOfChatGroups);
 
 		return result;
 	}
