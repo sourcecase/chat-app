@@ -56,10 +56,7 @@ public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 		http.addFilter(new ChatLogoutFilter());
 
 		http.authorizeRequests()
-				.antMatchers(ChatPathConfiguration.CHAT_INDEX, ChatPathConfiguration.CHAT_TEST,
-						ChatPathConfiguration.REST_REGISTER_PERFORM_URL, ChatPathConfiguration.LOGIN_VALIDATE_URL,
-						ChatPathConfiguration.LOGIN_URL, "/chat/error", ChatPathConfiguration.LOGIN_URL + "/*",
-						ChatPathConfiguration.CHAT_ROOT_DATA_PATH + "/**")
+				.antMatchers( "/**")
 				.permitAll().anyRequest().authenticated();
 
 		http.logout().permitAll();
@@ -84,7 +81,7 @@ public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/chat/javascript/**", "/favicon.ico");
+		web.ignoring().antMatchers("/javascript/**", "/favicon.ico");
 	}
 
 	@Autowired

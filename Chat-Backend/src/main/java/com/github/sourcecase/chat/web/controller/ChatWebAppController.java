@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,7 @@ import com.github.sourcecase.chat.service.impl.groups.ChatGroupDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
 import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ChatWebAppController {
@@ -52,9 +54,21 @@ public class ChatWebAppController {
 		return message;
 	}
 
-	@RequestMapping(path = ChatPathConfiguration.CHAT_ROOT_URL_PATH, method = RequestMethod.GET)
+	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public String index(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
 		LOGGER.log(Level.SEVERE, "index");
+		return "index";
+	}
+
+	@RequestMapping("/greeting")
+	public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+		model.addAttribute("name", name);
+		return "greetingview";
+	}
+
+	@RequestMapping(path = "/blubb", method = RequestMethod.GET)
+	public String blubb(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
+		LOGGER.log(Level.SEVERE, "blubb");
 		return "index";
 	}
 
