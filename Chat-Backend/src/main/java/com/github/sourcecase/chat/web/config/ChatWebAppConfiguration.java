@@ -3,10 +3,9 @@ package com.github.sourcecase.chat.web.config;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.eclipse.jetty.websocket.api.WebSocketBehavior;
-import org.eclipse.jetty.websocket.api.WebSocketPolicy;
-import org.eclipse.jetty.websocket.server.WebSocketServerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,31 +18,22 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-import org.springframework.web.socket.server.jetty.JettyRequestUpgradeStrategy;
-import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import com.github.sourcecase.chat.web.ChatPathConfiguration;
-import com.github.sourcecase.chat.web.controller.ChatWebSocketHandler;
 
 @Configuration
 @EnableWebMvc
-@EnableWebSocket
 @EnableAspectJAutoProxy
 @Order(-1)
+@EnableAutoConfiguration
 @ComponentScan(basePackages = "com.github.sourcecase.chat")
-public class ChatWebAppConfiguration extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
+public class ChatWebAppConfiguration extends WebMvcConfigurerAdapter {
 
 	private static final Logger logger = Logger.getLogger(ChatWebAppConfiguration.class.getName());
 
 	public ChatWebAppConfiguration() {
 		logger.log(Level.SEVERE, "init constructor.");
 	}
-
-	@Autowired
-	private ChatWebSocketHandler chatWebSocketHandler;
 
 	@Bean
 	public ViewResolver viewResolver() {
@@ -67,20 +57,8 @@ public class ChatWebAppConfiguration extends WebMvcConfigurerAdapter implements 
 		configurer.enable();
 	}
 
-	@Override
-	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(chatWebSocketHandler, ChatPathConfiguration.CHAT_WEB_SOCKET)
-				.setHandshakeHandler(handshakeHandler()).setAllowedOrigins("*");
-	}
-
-	@Bean
-	public DefaultHandshakeHandler handshakeHandler() {
-
-		WebSocketPolicy policy = new WebSocketPolicy(WebSocketBehavior.SERVER);
-		policy.setInputBufferSize(8192);
-		policy.setIdleTimeout(600000);
-
-		return new DefaultHandshakeHandler(new JettyRequestUpgradeStrategy(new WebSocketServerFactory(policy)));
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(ChatWebAppConfiguration.class, args);
 	}
 
 }

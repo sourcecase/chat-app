@@ -11,30 +11,22 @@
 	<groupId>com.github.sourcecase.chat.backend</groupId>
 	<artifactId>Chat-Backend</artifactId>
 	<name>Chat-Backend</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<description>The backend uses the spring framework to provide chat services and security.</description>
 
 	<dependencies>
 	<!-- spring dependencies -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-websocket</artifactId>
-			<version>${org.springframework.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>1.9.4.RELEASE</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -69,29 +61,9 @@
 			<version>1.4.191</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.1.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.1.0.Final</version>
-		</dependency>
-		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-client</artifactId>
-			<version>9.3.8.RC0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-server</artifactId>
-			<version>9.3.8.RC0</version>
 		</dependency>
 		<dependency>
     		<groupId>com.fasterxml.jackson.core</groupId>
@@ -114,26 +86,4 @@
     		<version>2.4</version>
 		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
-				<configuration> 
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<outputDirectory>D:/Programme/jetty-distribution-9.3.7.v20160115/demo-base/webapps/</outputDirectory>
-					<warName>root</warName>
-				</configuration> 
-			</plugin>
-			<plugin>
-  				<groupId>org.eclipse.jetty</groupId>
-  				<artifactId>jetty-maven-plugin</artifactId>
-  				<version>9.3.8.v20160314</version>
-  				<configuration> 
-					<scanIntervalSeconds>5</scanIntervalSeconds>
-				</configuration> 
-			</plugin>
-		</plugins>
-	</build>
 </project>
