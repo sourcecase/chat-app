@@ -3,8 +3,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<!--
 		<meta name="_csrf" content="${_csrf.token}"/>
 		<meta name="_csrf_header" content="${_csrf.headerName}"/>
+		--->
 		<title>Simple Chat System</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="//code.jquery.com/jquery-1.12.2.min.js"></script>

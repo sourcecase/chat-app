@@ -6,8 +6,10 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -22,6 +24,7 @@ import com.github.sourcecase.chat.web.security.authentication.ChatWebAppAuthenti
 import com.github.sourcecase.chat.web.security.logout.ChatLogoutFilter;
 
 @Configuration
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.github.sourcecase.chat")
 public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
@@ -52,12 +55,24 @@ public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 	protected void configure(HttpSecurity http) throws Exception {
 		logger.log(Level.SEVERE, "configure(HttpSecurity http)");
 		this.http = http;
+
+		http.csrf().disable();
 		this.createChatAuthenticationProcessingFilter();
 		http.addFilter(new ChatLogoutFilter());
 
 		http.authorizeRequests()
+				.antMatchers(ChatPathConfiguration.LOGIN_URL)
+				.permitAll()
+				.antMatchers(ChatPathConfiguration.LOGIN_VALIDATE_URL)
+				.permitAll()
 				.antMatchers( "/**")
-				.permitAll().anyRequest().authenticated();
+				.permitAll();
+
+		http.formLogin().loginPage(ChatPathConfiguration.LOGIN_URL);
+		http.formLogin().failureUrl(ChatPathConfiguration.LOGIN_URL + "?error");
+		http.formLogin().loginProcessingUrl(ChatPathConfiguration.LOGIN_VALIDATE_URL);
+		http.formLogin().defaultSuccessUrl(ChatPathConfiguration.REST_CHAT_GROUPS);
+		http.formLogin().permitAll();
 
 		http.logout().permitAll();
 		http.logout().logoutUrl(ChatPathConfiguration.LOGOUT_PERFORM_URL);

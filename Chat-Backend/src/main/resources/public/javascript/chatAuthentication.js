@@ -1,11 +1,12 @@
-var CHAT_LOGIN_VALIDATE_URL = "/chat/login/validate";
-var CHAT_REGISTRATION_URL = "/chat/register/perform";
-var CHAT_LOGOUT_URL = "/chat/logout/perform";
+var CHAT_LOGIN_VALIDATE_URL = "/login/validate";
+var CHAT_REGISTRATION_URL = "/register/perform";
+var CHAT_LOGOUT_URL = "/logout/perform";
 
 var chatParticipantAuthenticated = null;
 
 function addCSRFHeader(http) {
-	
+
+	/*
 	var metaValues = document.getElementsByTagName("META");
     var _csrf = metaValues[0].content;
     var _csrf_header = metaValues[1].content;
@@ -13,12 +14,13 @@ function addCSRFHeader(http) {
     console.log("_csrf_header : " +_csrf_header );
     
     http.setRequestHeader(_csrf_header, _csrf);
+    */
     
 }
 
 function validateLogin() {
 	
-	console.log("validateLogin");
+	console.log("validateLogin " + CHAT_LOGIN_VALIDATE_URL);
 	
 	var http = new XMLHttpRequest();
 	http.open("POST", CHAT_LOGIN_VALIDATE_URL, true);

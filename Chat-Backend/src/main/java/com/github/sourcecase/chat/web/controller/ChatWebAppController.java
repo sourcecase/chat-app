@@ -32,6 +32,7 @@ import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
 import com.github.sourcecase.chat.web.ChatPathConfiguration;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ChatWebAppController {
@@ -66,10 +67,11 @@ public class ChatWebAppController {
 		return "greetingview";
 	}
 
-	@RequestMapping(path = "/blubb", method = RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(path = "/blubb", method = RequestMethod.POST)
 	public String blubb(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
 		LOGGER.log(Level.SEVERE, "blubb");
-		return "index";
+		return "{blubb}";
 	}
 
 	@RequestMapping(path = ChatPathConfiguration.CHAT_TEST, method = RequestMethod.GET)
