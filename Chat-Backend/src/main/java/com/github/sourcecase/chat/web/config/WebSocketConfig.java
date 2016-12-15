@@ -1,5 +1,6 @@
 package com.github.sourcecase.chat.web.config;
 
+import com.github.sourcecase.chat.web.ChatPathConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
@@ -15,12 +16,13 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/chat/chatWebSocket");
+
+        config.enableSimpleBroker(ChatPathConfiguration.CHAT_WEB_SOCKET);
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chatWebSocket").withSockJS();
+        registry.addEndpoint(ChatPathConfiguration.CHAT_WEB_SOCKET).withSockJS();
     }
 
 }

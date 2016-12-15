@@ -65,6 +65,8 @@ public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 				.permitAll()
 				.antMatchers(ChatPathConfiguration.LOGIN_VALIDATE_URL)
 				.permitAll()
+				.antMatchers(ChatPathConfiguration.CHAT_WEB_SOCKET)
+				.permitAll()
 				.antMatchers( "/**")
 				.permitAll();
 

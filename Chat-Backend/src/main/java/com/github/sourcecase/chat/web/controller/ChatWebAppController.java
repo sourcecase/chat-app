@@ -48,8 +48,8 @@ public class ChatWebAppController {
 		this.chatMessageService = chatMessageService;
 	}
 
-	@MessageMapping("/chat/chatWebSocket")
-	@SendTo("/chat/chatWebSocket")
+	@MessageMapping(ChatPathConfiguration.CHAT_WEB_SOCKET_CREATE_MESSAGE)
+	@SendTo(ChatPathConfiguration.CHAT_WEB_SOCKET_RECEIVE_MESSAGE)
 	public WebChatMessage sendStomp(WebChatMessage message) throws Exception {
 		LOGGER.info("sendStomp called " + message.getText() + message.getGroup() + message.getSenderName());
 		return message;

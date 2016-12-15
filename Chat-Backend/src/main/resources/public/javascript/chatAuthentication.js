@@ -24,8 +24,8 @@ function validateLogin() {
 	
 	var http = new XMLHttpRequest();
 	http.open("POST", CHAT_LOGIN_VALIDATE_URL, true);
-	
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Connection", "close");
     addCSRFHeader(http);
 	

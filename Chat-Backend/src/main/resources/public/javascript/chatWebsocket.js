@@ -1,5 +1,6 @@
-var WEB_SOCKET_URL = "ws://localhost:8080/chat/chatWebSocket";
+var WEB_SOCKET_URL = "ws://localhost:8080/chatWebSocket";
 var socket = null;
+var stompClient = null;
 var receivedMessages = [];
 
 function onMessage(event) {
@@ -17,7 +18,12 @@ function sendMessage(senderName, text, group) {
     		"group":group,
     		"senderName": senderName
     };
-    socket.send(JSON.stringify(MessageAction));
+    //socket.send(JSON.stringify(MessageAction));
+    sendNewMessageStomp(JSON.stringify(MessageAction));
+}
+
+function sendNewMessageStomp(newMessage) {
+    stompClient.send("/sendMessage", {}, newMessage);
 }
 
 function printNewMessage(text) {
@@ -82,8 +88,20 @@ function chatGroupsCallback() {
 
 function initWebSocket() {
 	console.log("initWebSocket");
-	socket = new WebSocket(WEB_SOCKET_URL);
-	socket.onmessage = onMessage;
+	//socket = new WebSocket(WEB_SOCKET_URL);
+	//socket.onmessage = onMessage;
+	connect();
+}
+
+function connect() {
+    var socket = new SockJS('/chatWebSocket');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/newMessages', function (greeting) {
+            console.log('Connected: ' + JSON.parse(greeting.body).content);
+        });
+    });
 }
 
 function retrievChatGroups() {

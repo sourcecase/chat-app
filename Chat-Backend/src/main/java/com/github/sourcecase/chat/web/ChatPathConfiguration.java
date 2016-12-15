@@ -8,6 +8,8 @@ public final class ChatPathConfiguration {
 	public static final String REST_CHAT_GROUPS = "/chatGroups";
 	public static final String LOGIN_URL = "/login";
 	public static final String CHAT_WEB_SOCKET =  "/chatWebSocket";
+	public static final String CHAT_WEB_SOCKET_CREATE_MESSAGE =  "/sendMessage";
+	public static final String CHAT_WEB_SOCKET_RECEIVE_MESSAGE =  "/newMessages";
 	public static final String CHAT_TEST = "/test";
 
 }
