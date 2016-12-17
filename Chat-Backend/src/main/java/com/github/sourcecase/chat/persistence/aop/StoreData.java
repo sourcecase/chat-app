@@ -1,12 +1,12 @@
 package com.github.sourcecase.chat.persistence.aop;
 
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class StoreData implements ChatRoomTable {

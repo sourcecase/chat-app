@@ -1,8 +1,11 @@
 package com.github.sourcecase.chat.web.security.config;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.github.sourcecase.chat.service.api.ChatDTOFactory;
+import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import com.github.sourcecase.chat.web.security.authentication.ChatAuthenticationEntryPoint;
+import com.github.sourcecase.chat.web.security.authentication.ChatAuthenticationProcessingFilter;
+import com.github.sourcecase.chat.web.security.authentication.ChatWebAppAuthenticationProvider;
+import com.github.sourcecase.chat.web.security.logout.ChatLogoutFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -16,12 +19,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.github.sourcecase.chat.service.api.ChatDTOFactory;
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
-import com.github.sourcecase.chat.web.security.authentication.ChatAuthenticationEntryPoint;
-import com.github.sourcecase.chat.web.security.authentication.ChatAuthenticationProcessingFilter;
-import com.github.sourcecase.chat.web.security.authentication.ChatWebAppAuthenticationProvider;
-import com.github.sourcecase.chat.web.security.logout.ChatLogoutFilter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
@@ -88,7 +87,7 @@ public class ChatWebAppSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 		if (http != null && chatDTOFactory != null) {
 			if (chatAuthenticationProcessingFilter == null) {
 				this.chatAuthenticationProcessingFilter = new ChatAuthenticationProcessingFilter(
-						ChatPathConfiguration.LOGIN_VALIDATE_URL, this.authenticationManager(), chatDTOFactory);
+                        this.authenticationManager(), chatDTOFactory);
 				http.addFilter(this.chatAuthenticationProcessingFilter);
 				logger.log(Level.SEVERE, "createChatAuthenticationProcessingFilter");
 			}

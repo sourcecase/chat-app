@@ -1,10 +1,9 @@
 package com.github.sourcecase.chat.web.security.authentication;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.github.sourcecase.chat.service.api.ChatDTOFactory;
+import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
+import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
+import com.github.sourcecase.chat.service.api.users.ChatUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,10 +15,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.github.sourcecase.chat.service.api.ChatDTOFactory;
-import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
-import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
-import com.github.sourcecase.chat.service.api.users.ChatUserService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class ChatWebAppAuthenticationProvider implements AuthenticationProvider {
@@ -54,8 +53,7 @@ public class ChatWebAppAuthenticationProvider implements AuthenticationProvider 
 
 		if (validateLogin != null) {
 			logger.log(Level.SEVERE, "authentication granted");
-			UsernamePasswordAuthenticationToken result = createToken(authentication, authority);
-			return result;
+			return createToken(authentication, authority);
 		} else {
 			logger.log(Level.SEVERE, "authentication not granted");
 			return null;
@@ -78,11 +76,7 @@ public class ChatWebAppAuthenticationProvider implements AuthenticationProvider 
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		if (authentication == UsernamePasswordAuthenticationToken.class) {
-			return true;
-		} else {
-			return false;
-		}
+		return authentication == UsernamePasswordAuthenticationToken.class;
 	}
 
 }

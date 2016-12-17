@@ -16,11 +16,11 @@ function createChatParticipantDtoJson(username, password) {
     return JSON.stringify(chatParticipantDto);
 }
 
-function createChatMessageDto(text, chatParticipantDto) {
-	return {"type":"message","id":-1, "text": text, "time":"19:09:52", "sender": chatParticipantDto};
+function createChatCreateMessageDto(text, group, senderName) {
+	return {"type":"createMessage", "text": text, "group": group, "senderName": senderName};
 }
 
-function createChatMessageDtoJson(text, chatParticipantDto) {
-	var chatMessageDto = createChatMessageDto(text, chatParticipantDto);
-    return JSON.stringify(chatMessageDto);
+function createChatCreateMessageDtoJson(text, group, senderName) {
+	var chatCreateMessageDto = createChatCreateMessageDto(text, group, senderName);
+    return JSON.stringify(chatCreateMessageDto);
 }

@@ -1,12 +1,12 @@
 package com.github.sourcecase.chat.service.impl;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sourcecase.chat.service.api.ChatDTO;
+
+import java.io.IOException;
+import java.io.StringWriter;
 
 public class AbstractChatDTO implements ChatDTO {
 

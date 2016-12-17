@@ -1,13 +1,7 @@
 package com.github.sourcecase.chat.web.security.authentication;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.github.sourcecase.chat.service.api.ChatDTOFactory;
+import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
 import org.apache.commons.io.IOUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -17,19 +11,23 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.github.sourcecase.chat.service.api.ChatDTOFactory;
-import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ChatAuthenticationProcessingFilter extends UsernamePasswordAuthenticationFilter {
 
 	private static final Logger logger = Logger.getLogger(ChatAuthenticationProcessingFilter.class.getName());
 	private final ChatDTOFactory chatDTOFactory;
 
-	public ChatAuthenticationProcessingFilter(String processingUrl, AuthenticationManager authenticationManager,
-			ChatDTOFactory chatDTOFactory) {
+	public ChatAuthenticationProcessingFilter(AuthenticationManager authenticationManager,
+											  ChatDTOFactory chatDTOFactory) {
 		super();
 		this.chatDTOFactory = chatDTOFactory;
-		AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher(processingUrl, "POST");
+		AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher(com.github.sourcecase.chat.web.ChatPathConfiguration.LOGIN_VALIDATE_URL, "POST");
 		this.setRequiresAuthenticationRequestMatcher(antPathRequestMatcher);
 		this.setAuthenticationManager(authenticationManager);
 	}

@@ -1,14 +1,13 @@
 package com.github.sourcecase.chat.web.security.logout;
 
-import java.util.logging.Logger;
-
+import com.github.sourcecase.chat.web.ChatPathConfiguration;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import java.util.logging.Logger;
 
 public class ChatLogoutFilter extends LogoutFilter {
 

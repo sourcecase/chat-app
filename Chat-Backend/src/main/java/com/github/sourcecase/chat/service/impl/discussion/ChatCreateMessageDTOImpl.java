@@ -1,23 +1,21 @@
-package com.github.sourcecase.chat.web.controller;
+package com.github.sourcecase.chat.service.impl.discussion;
 
-/**
- * Created by chris on 12.12.2016.
- */
-public class WebChatMessage {
+import com.github.sourcecase.chat.service.api.discussion.ChatCreateMessageDTO;
+import com.github.sourcecase.chat.service.impl.AbstractChatDTO;
+
+public class ChatCreateMessageDTOImpl extends AbstractChatDTO implements ChatCreateMessageDTO {
 
     private String text;
     private String group;
     private String senderName;
-    private String action;
 
-    public WebChatMessage() {
+    public ChatCreateMessageDTOImpl() {
     }
 
-    public WebChatMessage(String text, String group, String senderName, String action) {
+    public ChatCreateMessageDTOImpl(String text, String group, String senderName, String action) {
         this.text = text;
         this.group = group;
         this.senderName = senderName;
-        this.action = action;
     }
 
     public String getText() {
@@ -44,11 +42,4 @@ public class WebChatMessage {
         this.senderName = senderName;
     }
 
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
 }

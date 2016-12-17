@@ -1,11 +1,5 @@
 package com.github.sourcecase.chat.service.impl;
 
-import java.io.IOException;
-import java.sql.Time;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +14,11 @@ import com.github.sourcecase.chat.service.impl.discussion.ChatMessageDTOImpl;
 import com.github.sourcecase.chat.service.impl.groups.ChatGroupDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.sql.Time;
+import java.util.List;
 
 @Service
 public class ChatDTOFactoryImpl implements ChatDTOFactory {

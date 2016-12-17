@@ -17,7 +17,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
 
-        config.enableSimpleBroker(ChatPathConfiguration.CHAT_WEB_SOCKET);
+        config.enableSimpleBroker(ChatPathConfiguration.CHAT_WEB_SOCKET_RECEIVE_MESSAGE);
     }
 
     @Override

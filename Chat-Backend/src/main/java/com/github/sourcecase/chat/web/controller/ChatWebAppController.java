@@ -1,27 +1,9 @@
 package com.github.sourcecase.chat.web.controller;
 
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.github.sourcecase.chat.service.api.ChatDTOFactory;
+import com.github.sourcecase.chat.service.api.discussion.ChatCreateMessageDTO;
 import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionDTO;
+import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionService;
 import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
@@ -31,8 +13,22 @@ import com.github.sourcecase.chat.service.impl.groups.ChatGroupDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
 import com.github.sourcecase.chat.web.ChatPathConfiguration;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpSession;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 public class ChatWebAppController {
@@ -50,28 +46,17 @@ public class ChatWebAppController {
 
 	@MessageMapping(ChatPathConfiguration.CHAT_WEB_SOCKET_CREATE_MESSAGE)
 	@SendTo(ChatPathConfiguration.CHAT_WEB_SOCKET_RECEIVE_MESSAGE)
-	public WebChatMessage sendStomp(WebChatMessage message) throws Exception {
-		LOGGER.info("sendStomp called " + message.getText() + message.getGroup() + message.getSenderName());
-		return message;
+	public ChatMessageDTO sendStomp(ChatCreateMessageDTO message) throws Exception {
+		LOGGER.info("sendStomp called " + message.getText() + " " +  message.getGroup() + " " + message.getSenderName());
+		ChatMessageDTO chatMessageDTO = chatMessageService.addMessage(message);
+		LOGGER.info("sendStomp called responding with:" + chatMessageDTO.toString() );
+		return chatMessageDTO;
 	}
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public String index(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
 		LOGGER.log(Level.SEVERE, "index");
 		return "index";
-	}
-
-	@RequestMapping("/greeting")
-	public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
-		model.addAttribute("name", name);
-		return "greetingview";
-	}
-
-	@ResponseBody
-	@RequestMapping(path = "/blubb", method = RequestMethod.POST)
-	public String blubb(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
-		LOGGER.log(Level.SEVERE, "blubb");
-		return "{blubb}";
 	}
 
 	@RequestMapping(path = ChatPathConfiguration.CHAT_TEST, method = RequestMethod.GET)

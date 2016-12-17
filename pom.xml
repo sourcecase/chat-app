@@ -26,22 +26,6 @@
 	<modules>
 		<module>Chat-Backend</module>
 	</modules>
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>chat-releases</id>
-			<name>chat-releases</name>
-			<url>${chat.url.releases}</url>
-			<layout>default</layout>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>true</uniqueVersion>
-			<id>chat-snapshots</id>
-			<name>chat-snapshots</name>
-			<url>${chat.url.snapshots}</url>
-			<layout>default</layout>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<dependencyManagement>
 		<dependencies>

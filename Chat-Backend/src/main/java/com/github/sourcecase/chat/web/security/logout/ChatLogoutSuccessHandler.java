@@ -1,14 +1,13 @@
 package com.github.sourcecase.chat.web.security.logout;
 
-import java.io.IOException;
-import java.util.logging.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 public class ChatLogoutSuccessHandler implements LogoutSuccessHandler {
 

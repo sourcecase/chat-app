@@ -40,8 +40,10 @@ function validateLogin() {
     
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-        	console.log("Login response came logged in now.");
-        	chatParticipantAuthenticated = createChatUserLoginDto(name, password);
+        	console.log("Login response came logged in noww.");
+            var principal = createChatUserLoginDto(name, password);
+            console.log("principal=" + JSON.stringify(principal));
+        	chatParticipantAuthenticated = principal;
         	showChatMain();
         } else {
         	if(http.status != 200) {

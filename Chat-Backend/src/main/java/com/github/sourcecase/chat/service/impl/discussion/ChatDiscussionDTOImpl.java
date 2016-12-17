@@ -1,11 +1,11 @@
 package com.github.sourcecase.chat.service.impl.discussion;
 
-import java.util.List;
-
 import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionDTO;
 import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 import com.github.sourcecase.chat.service.impl.AbstractChatDTO;
+
+import java.util.List;
 
 public class ChatDiscussionDTOImpl extends AbstractChatDTO implements ChatDiscussionDTO {
 

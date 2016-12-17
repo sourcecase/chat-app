@@ -10,39 +10,14 @@ function onMessage(event) {
     }
 }
 
-function sendMessage(senderName, text, group) {
-	console.log("sendMessage senderName: " + senderName + " text:" + text + " group:" + group);
-    var MessageAction = {
-    		"action":"chatMessage", 
-    		"text":text,
-    		"group":group,
-    		"senderName": senderName
-    };
-    //socket.send(JSON.stringify(MessageAction));
-    sendNewMessageStomp(JSON.stringify(MessageAction));
+function sendMessage(text, group, senderName) {
+    var newCreateMessage = createChatCreateMessageDtoJson(text, group, senderName);
+    console.log(newCreateMessage);
+    sendNewMessageStomp(newCreateMessage);
 }
 
 function sendNewMessageStomp(newMessage) {
     stompClient.send("/sendMessage", {}, newMessage);
-}
-
-function printNewMessage(text) {
-	console.log(text);
-	receivedMessages.push(text);
-	printMessages(receivedMessages);
-}
-
-function printMessages(allMessages) {
-	var content = document.getElementById("newChatMessage");
-	var messageList = "<ul>";
-	
-	var i = 0;
-	for (i = 0; i < allMessages.length; i++) {
-		messageList = messageList + "<li>" + allMessages[i] + "</li>";
-	}
-	
-	messageList = messageList + "</ul>";
-	content.innerHTML = messageList;
 }
 
 function showForm() {
@@ -51,45 +26,19 @@ function showForm() {
 
 function formSubmit() {
     var form = document.getElementById("newMessageForm");
-    form.elements["nick_name"].value = chatParticipantAuthenticated.username;
+    form.elements["nick_name"].value = chatParticipantAuthenticated.name;
     var senderName = form.elements["nick_name"].value;
     var group = form.elements["chat_room"].value;
     var text = form.elements["new_message"].value;
-    sendMessage(senderName, text, group);
+    sendMessage(text, group, senderName);
     document.getElementById("new_message").value = "";
 }
 var req;
 
-function chatGroupsCallback() {
-	//Example
-	//{"type":"ChatGroupListDTOImpl","chatGroups":[{"type":"group","id":3,"name":"J2EE"},
-	//{"type":"group","id":4,"name":"Hibernate"},{"type":"group","id":5,"name":"Ultimate Frisbee"},{"type":"group","id":6,"name":"Klettersteigen"}]}
-	if (req.readyState == 4) {
-        if (req.status == 200) {
-        	console.log("hello chatRoomsCallback");
-        	console.log(req.responseText);
-        	console.log(req);
-        	
-        	var chatGroupListDTO = JSON.parse(req.responseText);
-        	var chatGroupArray = chatGroupListDTO.chatGroups;
-        	
-        	var htmlChatRooms = "";
-        	var i = 0;
-        	for (i = 0; i < chatGroupArray.length; i++) {
-        		var chatGroupName = chatGroupArray[i].name;
-        		htmlChatRooms = htmlChatRooms + "<option name='type' value='" + chatGroupName + "'>" + chatGroupName + "</option>";
-        	}
-        	
-        	var form = document.getElementById("chat_room");
-        	form.innerHTML = htmlChatRooms;
-        }
-	}
-}
+
 
 function initWebSocket() {
 	console.log("initWebSocket");
-	//socket = new WebSocket(WEB_SOCKET_URL);
-	//socket.onmessage = onMessage;
 	connect();
 }
 
@@ -99,10 +48,35 @@ function connect() {
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/newMessages', function (greeting) {
-            console.log('Connected: ' + JSON.parse(greeting.body).content);
+            console.log("chatWebSocket/newMessages: " + greeting.body);
+            var chatMessage = JSON.parse(greeting.body);
+            printNewMessage(chatMessage);
         });
     });
 }
+
+function printNewMessage(chatMessage) {
+	receivedMessages.push(chatMessage);
+	printMessages(receivedMessages);
+}
+
+function printMessages(allMessages) {
+	var content = document.getElementById("newChatMessage");
+	var messageList = "<ul>";
+
+	var i = 0;
+	for (i = 0; i < allMessages.length; i++) {
+	    var currentMessage = allMessages[i];
+	    var messageText = currentMessage.text;
+        var messageTime = currentMessage.time;
+        var senderName = currentMessage.sender.name;
+		messageList = messageList + "<li><i>" + messageTime + "</i> " + senderName + ": " + messageText + "</li>";
+	}
+
+	messageList = messageList + "</ul>";
+	content.innerHTML = messageList;
+}
+
 
 function retrievChatGroups() {
 	console.log("retrievChatGroups");
@@ -115,6 +89,29 @@ function retrievChatGroups() {
 	req.open("GET", url, true);
 	req.onreadystatechange = chatGroupsCallback;
 	req.send(null);
+}
+
+function chatGroupsCallback() {
+	if (req.readyState == 4) {
+        if (req.status == 200) {
+        	console.log("hello chatRoomsCallback");
+        	console.log(req.responseText);
+        	console.log(req);
+
+        	var chatGroupListDTO = JSON.parse(req.responseText);
+        	var chatGroupArray = chatGroupListDTO.chatGroups;
+
+        	var htmlChatRooms = "";
+        	var i = 0;
+        	for (i = 0; i < chatGroupArray.length; i++) {
+        		var chatGroupName = chatGroupArray[i].name;
+        		htmlChatRooms = htmlChatRooms + "<option name='type' value='" + chatGroupName + "'>" + chatGroupName + "</option>";
+        	}
+
+        	var form = document.getElementById("chat_room");
+        	form.innerHTML = htmlChatRooms;
+        }
+	}
 }
 
 function startChatting() {
