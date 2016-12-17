@@ -8,7 +8,7 @@ import com.github.sourcecase.chat.service.api.groups.ChatGroupListDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupService;
 import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
 import com.github.sourcecase.chat.service.api.users.ChatUserService;
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import com.github.sourcecase.chat.web.config.ChatPathConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -1,4 +1,4 @@
-package com.github.sourcecase.chat.web;
+package com.github.sourcecase.chat.web.config;
 
 public final class ChatPathConfiguration {
 

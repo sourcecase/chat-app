@@ -1,6 +1,6 @@
 package com.github.sourcecase.chat.web.security.logout;
 
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import com.github.sourcecase.chat.web.config.ChatPathConfiguration;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

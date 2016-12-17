@@ -1,7 +1,7 @@
 package com.github.sourcecase.chat.web.security.config;
 
 import com.github.sourcecase.chat.service.api.ChatDTOFactory;
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import com.github.sourcecase.chat.web.config.ChatPathConfiguration;
 import com.github.sourcecase.chat.web.security.authentication.ChatAuthenticationEntryPoint;
 import com.github.sourcecase.chat.web.security.authentication.ChatAuthenticationProcessingFilter;
 import com.github.sourcecase.chat.web.security.authentication.ChatWebAppAuthenticationProvider;

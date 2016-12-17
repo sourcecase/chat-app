@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>com.github.sourcecase.chat</groupId>
-		<artifactId>Chat-Root</artifactId>
-		<version>0.3.0-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.2.RELEASE</version>
 	</parent>
 	
 	<groupId>com.github.sourcecase.chat.backend</groupId>
@@ -14,8 +14,28 @@
 	<packaging>jar</packaging>
 	<description>The backend uses the spring framework to provide chat services and security.</description>
 
+	<properties>
+		<java-version>1.8</java-version>
+		<org.springframework.version>4.2.5.RELEASE</org.springframework.version>
+		<org.springframework.security.version>4.0.4.RELEASE</org.springframework.security.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+					<debug>true</debug>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

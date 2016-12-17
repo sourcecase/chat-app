@@ -1,6 +1,5 @@
 package com.github.sourcecase.chat.web.config;
 
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;

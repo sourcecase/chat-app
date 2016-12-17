@@ -12,7 +12,7 @@ import com.github.sourcecase.chat.service.impl.discussion.ChatMessageDTOImpl;
 import com.github.sourcecase.chat.service.impl.groups.ChatGroupDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import com.github.sourcecase.chat.web.config.ChatPathConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -31,26 +31,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Controller
-public class ChatWebAppController {
+public class ChatWebController {
 
-	private static final Logger LOGGER = Logger.getLogger(ChatWebAppController.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ChatWebController.class.getName());
 	private final ChatDiscussionService chatMessageService;
 
 	@Autowired
 	private ChatDTOFactory chatDTOFactory;
 
-	ChatWebAppController(@Autowired ChatDiscussionService chatMessageService) {
+	ChatWebController(@Autowired ChatDiscussionService chatMessageService) {
 
 		this.chatMessageService = chatMessageService;
-	}
-
-	@MessageMapping(ChatPathConfiguration.CHAT_WEB_SOCKET_CREATE_MESSAGE)
-	@SendTo(ChatPathConfiguration.CHAT_WEB_SOCKET_RECEIVE_MESSAGE)
-	public ChatMessageDTO sendStomp(ChatCreateMessageDTO message) throws Exception {
-		LOGGER.info("sendStomp called " + message.getText() + " " +  message.getGroup() + " " + message.getSenderName());
-		ChatMessageDTO chatMessageDTO = chatMessageService.addMessage(message);
-		LOGGER.info("sendStomp called responding with:" + chatMessageDTO.toString() );
-		return chatMessageDTO;
 	}
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)

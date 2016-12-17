@@ -2,6 +2,7 @@ package com.github.sourcecase.chat.web.security.authentication;
 
 import com.github.sourcecase.chat.service.api.ChatDTOFactory;
 import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
+import com.github.sourcecase.chat.web.config.ChatPathConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -27,7 +28,7 @@ public class ChatAuthenticationProcessingFilter extends UsernamePasswordAuthenti
 											  ChatDTOFactory chatDTOFactory) {
 		super();
 		this.chatDTOFactory = chatDTOFactory;
-		AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher(com.github.sourcecase.chat.web.ChatPathConfiguration.LOGIN_VALIDATE_URL, "POST");
+		AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher(ChatPathConfiguration.LOGIN_VALIDATE_URL, "POST");
 		this.setRequiresAuthenticationRequestMatcher(antPathRequestMatcher);
 		this.setAuthenticationManager(authenticationManager);
 	}
