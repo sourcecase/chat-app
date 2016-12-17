@@ -1,11 +1,5 @@
 package com.github.sourcecase.chat.persistence.config;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.github.sourcecase.chat.persistence.entities.ChatGroupEntity;
 import com.github.sourcecase.chat.persistence.entities.ChatMessageEntity;
 import com.github.sourcecase.chat.persistence.entities.ChatUserEntity;
@@ -13,6 +7,11 @@ import com.github.sourcecase.chat.persistence.repositories.ChatGroupRepository;
 import com.github.sourcecase.chat.persistence.repositories.ChatMessageRepository;
 import com.github.sourcecase.chat.persistence.repositories.ChatUserRepository;
 import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class PersistenceTestData {

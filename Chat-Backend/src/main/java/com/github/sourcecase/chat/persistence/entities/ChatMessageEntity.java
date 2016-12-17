@@ -1,12 +1,7 @@
 package com.github.sourcecase.chat.persistence.entities;
 
+import javax.persistence.*;
 import java.sql.Time;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class ChatMessageEntity {

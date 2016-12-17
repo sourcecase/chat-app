@@ -1,13 +1,13 @@
 package com.github.sourcecase.chat.service.api;
 
-import java.sql.Time;
-import java.util.List;
-
 import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionDTO;
 import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
 import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
+
+import java.sql.Time;
+import java.util.List;
 
 public interface ChatDTOFactory {
 

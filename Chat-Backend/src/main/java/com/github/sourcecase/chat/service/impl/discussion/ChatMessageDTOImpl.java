@@ -1,10 +1,10 @@
 package com.github.sourcecase.chat.service.impl.discussion;
 
-import java.sql.Time;
-
 import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
 import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
 import com.github.sourcecase.chat.service.impl.AbstractChatDTO;
+
+import java.sql.Time;
 
 public class ChatMessageDTOImpl extends AbstractChatDTO implements ChatMessageDTO {
 

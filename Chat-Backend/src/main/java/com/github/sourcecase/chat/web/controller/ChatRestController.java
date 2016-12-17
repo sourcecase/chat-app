@@ -1,17 +1,14 @@
 package com.github.sourcecase.chat.web.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.spi.JsonProvider;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.github.sourcecase.chat.service.api.ChatDTOFactory;
+import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionService;
+import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
+import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
+import com.github.sourcecase.chat.service.api.groups.ChatGroupListDTO;
+import com.github.sourcecase.chat.service.api.groups.ChatGroupService;
+import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
+import com.github.sourcecase.chat.service.api.users.ChatUserService;
+import com.github.sourcecase.chat.web.config.ChatPathConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,15 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.sourcecase.chat.service.api.ChatDTOFactory;
-import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionService;
-import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
-import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
-import com.github.sourcecase.chat.service.api.groups.ChatGroupListDTO;
-import com.github.sourcecase.chat.service.api.groups.ChatGroupService;
-import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
-import com.github.sourcecase.chat.service.api.users.ChatUserService;
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.spi.JsonProvider;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
 public class ChatRestController {
@@ -68,7 +66,6 @@ public class ChatRestController {
 		/*
 		 * TODO: Add plausibility check for inputStream size
 		 */
-		;
 		try {
 			InputStream bodyStream = servletRequest.getInputStream();
 			String body = IOUtils.toString(bodyStream);
@@ -107,8 +104,7 @@ public class ChatRestController {
 			createArrayBuilder.add(message.getText());
 		}
 
-		JsonArray chatRoomsJson = createArrayBuilder.build();
-		return chatRoomsJson;
+		return createArrayBuilder.build();
 	}
 
 }

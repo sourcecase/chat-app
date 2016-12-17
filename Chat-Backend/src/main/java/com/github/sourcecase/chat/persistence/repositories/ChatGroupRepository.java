@@ -1,10 +1,9 @@
 package com.github.sourcecase.chat.persistence.repositories;
 
-import java.util.List;
-
+import com.github.sourcecase.chat.persistence.entities.ChatGroupEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.github.sourcecase.chat.persistence.entities.ChatGroupEntity;
+import java.util.List;
 
 public interface ChatGroupRepository extends JpaRepository<ChatGroupEntity, Long> {
 

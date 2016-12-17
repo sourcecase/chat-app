@@ -1,23 +1,9 @@
 package com.github.sourcecase.chat.web.controller;
 
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.github.sourcecase.chat.service.api.ChatDTOFactory;
+import com.github.sourcecase.chat.service.api.discussion.ChatCreateMessageDTO;
 import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionDTO;
+import com.github.sourcecase.chat.service.api.discussion.ChatDiscussionService;
 import com.github.sourcecase.chat.service.api.discussion.ChatMessageDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
@@ -26,40 +12,62 @@ import com.github.sourcecase.chat.service.impl.discussion.ChatMessageDTOImpl;
 import com.github.sourcecase.chat.service.impl.groups.ChatGroupDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatParticipantDTOImpl;
 import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
-import com.github.sourcecase.chat.web.ChatPathConfiguration;
+import com.github.sourcecase.chat.web.config.ChatPathConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpSession;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
-public class ChatWebAppController {
+public class ChatWebController {
 
-	private static final Logger logger = Logger.getLogger(ChatWebSocketHandler.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ChatWebController.class.getName());
+	private final ChatDiscussionService chatMessageService;
 
 	@Autowired
 	private ChatDTOFactory chatDTOFactory;
 
-	@RequestMapping(path = ChatPathConfiguration.CHAT_ROOT_URL_PATH, method = RequestMethod.GET)
+	ChatWebController(@Autowired ChatDiscussionService chatMessageService) {
+
+		this.chatMessageService = chatMessageService;
+	}
+
+	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public String index(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
-		logger.log(Level.SEVERE, "index");
+		LOGGER.log(Level.SEVERE, "index");
 		return "index";
 	}
 
 	@RequestMapping(path = ChatPathConfiguration.CHAT_TEST, method = RequestMethod.GET)
 	public String test(ModelMap model, ServletRequest servletRequest, HttpSession httpSession) {
-		logger.log(Level.SEVERE, "index");
+		LOGGER.log(Level.SEVERE, "index");
 		String chatGroupDTOJson = new ChatGroupDTOImpl(2, "aa").serializeToJson();
-		logger.log(Level.INFO, chatGroupDTOJson);
+		LOGGER.log(Level.INFO, chatGroupDTOJson);
 		ChatGroupDTO chatGroupDTO = chatDTOFactory.createFromJson(ChatGroupDTOImpl.class, chatGroupDTOJson);
-		logger.log(Level.INFO, chatGroupDTO.getName());
+		LOGGER.log(Level.INFO, chatGroupDTO.getName());
 
 		String chatParticipantDTOJson = new ChatParticipantDTOImpl(4, "me").serializeToJson();
-		logger.log(Level.INFO, chatParticipantDTOJson);
+		LOGGER.log(Level.INFO, chatParticipantDTOJson);
 		ChatParticipantDTO chatParticipantDTO = chatDTOFactory.createFromJson(ChatParticipantDTOImpl.class,
 				chatParticipantDTOJson);
-		logger.log(Level.INFO, chatParticipantDTO.getName());
+		LOGGER.log(Level.INFO, chatParticipantDTO.getName());
 
 		String userLoginDTOJson = new ChatUserLoginDTOImpl("Alice1", "asdf").serializeToJson();
-		logger.log(Level.INFO, "Alice json: " + userLoginDTOJson);
+		LOGGER.log(Level.INFO, "Alice json: " + userLoginDTOJson);
 		ChatUserLoginDTO userLoginDTO = chatDTOFactory.createFromJson(ChatUserLoginDTO.class, userLoginDTOJson);
-		logger.log(Level.INFO, userLoginDTO.getName());
+		LOGGER.log(Level.INFO, userLoginDTO.getName());
 
 		Calendar cal = Calendar.getInstance();
 
@@ -71,15 +79,15 @@ public class ChatWebAppController {
 
 		String chatMessageDTOJson1 = new ChatMessageDTOImpl(5, "hello me", new Time(cal.getTime().getTime()),
 				chatParticipantDTO).serializeToJson();
-		logger.log(Level.INFO, chatMessageDTOJson1);
+		LOGGER.log(Level.INFO, chatMessageDTOJson1);
 		ChatMessageDTO chatMessageDTO1 = chatDTOFactory.createFromJson(ChatMessageDTOImpl.class, chatMessageDTOJson1);
-		logger.log(Level.INFO, "chatMessageDTO1 " + chatMessageDTO1.getSender().getName());
+		LOGGER.log(Level.INFO, "chatMessageDTO1 " + chatMessageDTO1.getSender().getName());
 
 		String chatMessageDTOJson2 = new ChatMessageDTOImpl(6, "hello you", new Time(cal.getTime().getTime()),
 				chatParticipantDTO).serializeToJson();
-		logger.log(Level.INFO, chatMessageDTOJson2);
+		LOGGER.log(Level.INFO, chatMessageDTOJson2);
 		ChatMessageDTO chatMessageDTO2 = chatDTOFactory.createFromJson(ChatMessageDTOImpl.class, chatMessageDTOJson2);
-		logger.log(Level.INFO, "chatMessageDTO2 " + chatMessageDTO2.getSender().getName());
+		LOGGER.log(Level.INFO, "chatMessageDTO2 " + chatMessageDTO2.getSender().getName());
 
 		List<ChatMessageDTO> chatMessages = new ArrayList<>();
 		chatMessages.add(chatMessageDTO1);
@@ -87,10 +95,10 @@ public class ChatWebAppController {
 
 		String chatDiscussionDTOJson = chatDTOFactory.createChatDiscussionDTO(chatGroupDTO, chatMessages)
 				.serializeToJson();
-		logger.log(Level.INFO, chatDiscussionDTOJson);
+		LOGGER.log(Level.INFO, chatDiscussionDTOJson);
 		ChatDiscussionDTO chatDiscussionDTO = chatDTOFactory.createFromJson(ChatDiscussionDTO.class,
 				chatDiscussionDTOJson);
-		logger.log(Level.INFO, "chatDiscussionDTO " + chatDiscussionDTO.getChatMessages().get(0).getText());
+		LOGGER.log(Level.INFO, "chatDiscussionDTO " + chatDiscussionDTO.getChatMessages().get(0).getText());
 		return "index";
 	}
 

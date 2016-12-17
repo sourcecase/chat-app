@@ -1,9 +1,9 @@
 package com.github.sourcecase.chat.web.security;
 
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
 public class ChatSecurityWebApplicationInitializer extends AbstractSecurityWebApplicationInitializer {
 

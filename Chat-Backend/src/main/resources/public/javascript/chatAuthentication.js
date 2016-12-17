@@ -1,11 +1,12 @@
-var CHAT_LOGIN_VALIDATE_URL = "/chat/login/validate";
-var CHAT_REGISTRATION_URL = "/chat/register/perform";
-var CHAT_LOGOUT_URL = "/chat/logout/perform";
+var CHAT_LOGIN_VALIDATE_URL = "/login/validate";
+var CHAT_REGISTRATION_URL = "/register/perform";
+var CHAT_LOGOUT_URL = "/logout/perform";
 
 var chatParticipantAuthenticated = null;
 
 function addCSRFHeader(http) {
-	
+
+	/*
 	var metaValues = document.getElementsByTagName("META");
     var _csrf = metaValues[0].content;
     var _csrf_header = metaValues[1].content;
@@ -13,17 +14,18 @@ function addCSRFHeader(http) {
     console.log("_csrf_header : " +_csrf_header );
     
     http.setRequestHeader(_csrf_header, _csrf);
+    */
     
 }
 
 function validateLogin() {
 	
-	console.log("validateLogin");
+	console.log("validateLogin " + CHAT_LOGIN_VALIDATE_URL);
 	
 	var http = new XMLHttpRequest();
 	http.open("POST", CHAT_LOGIN_VALIDATE_URL, true);
-	
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Connection", "close");
     addCSRFHeader(http);
 	
@@ -38,8 +40,10 @@ function validateLogin() {
     
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-        	console.log("Login response came logged in now.");
-        	chatParticipantAuthenticated = createChatUserLoginDto(name, password);
+        	console.log("Login response came logged in noww.");
+            var principal = createChatUserLoginDto(name, password);
+            console.log("principal=" + JSON.stringify(principal));
+        	chatParticipantAuthenticated = principal;
         	showChatMain();
         } else {
         	if(http.status != 200) {

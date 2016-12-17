@@ -1,16 +1,15 @@
 package com.github.sourcecase.chat.service.impl.users;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.github.sourcecase.chat.persistence.entities.ChatUserEntity;
 import com.github.sourcecase.chat.persistence.repositories.ChatUserRepository;
 import com.github.sourcecase.chat.service.api.ChatDTOFactory;
 import com.github.sourcecase.chat.service.api.users.ChatParticipantDTO;
 import com.github.sourcecase.chat.service.api.users.ChatUserLoginDTO;
 import com.github.sourcecase.chat.service.api.users.ChatUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ChatUserServiceImpl implements ChatUserService {

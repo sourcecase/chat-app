@@ -25,8 +25,8 @@ import com.github.sourcecase.chat.service.impl.users.ChatUserLoginDTOImpl;
 @JsonSubTypes({ @Type(value = ChatUserLoginDTOImpl.class, name = "userLogin") })
 public interface ChatUserLoginDTO {
 
-	public String getName();
+	String getName();
 
-	public String getPassword();
+	String getPassword();
 
 }

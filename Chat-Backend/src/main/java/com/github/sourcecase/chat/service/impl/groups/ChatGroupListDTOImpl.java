@@ -1,10 +1,10 @@
 package com.github.sourcecase.chat.service.impl.groups;
 
-import java.util.List;
-
 import com.github.sourcecase.chat.service.api.groups.ChatGroupDTO;
 import com.github.sourcecase.chat.service.api.groups.ChatGroupListDTO;
 import com.github.sourcecase.chat.service.impl.AbstractChatDTO;
+
+import java.util.List;
 
 public class ChatGroupListDTOImpl extends AbstractChatDTO implements ChatGroupListDTO {
 
